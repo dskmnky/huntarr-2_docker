@@ -11,7 +11,7 @@
 If you discover a security vulnerability in Huntarr-2, please report it responsibly:
 
 1. **Do NOT open a public issue** for security vulnerabilities
-2. Email the details to: **security@hellocolello.com** (or open a private security advisory on GitHub)
+2. Use GitHub's **[Private Vulnerability Reporting](https://github.com/xtamtamx/huntarr-2/security/advisories/new)**
 3. Include:
    - Description of the vulnerability
    - Steps to reproduce
