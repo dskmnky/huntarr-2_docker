@@ -1,6 +1,6 @@
 # Huntarr-2
 
-A personal fork of [Huntarr](https://github.com/plexguide/Huntarr.io) with security patches and customizations.
+A personal fork of Huntarr with security patches and customizations.
 
 ## What is Huntarr?
 
@@ -80,12 +80,16 @@ This fork includes:
 
 ## Screenshots
 
-*Coming soon*
+### Home Dashboard
+![Home Dashboard](screenshots/home.jpg)
+
+### Settings
+![Settings](screenshots/settings.jpg)
 
 ## Credits
 
-Based on [Huntarr.io](https://github.com/plexguide/Huntarr.io) by PlexGuide.
+Based on Huntarr by PlexGuide.
 
 ## License
 
-See original project for license terms.
+MIT License
