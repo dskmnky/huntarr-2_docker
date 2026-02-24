@@ -1,0 +1,1 @@
+// Sponsor rotation removed

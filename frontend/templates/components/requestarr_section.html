@@ -1,0 +1,850 @@
+<!-- Requestarr Section - Discover Style -->
+<div id="requestarr-section" class="content-section" style="display: none;">
+    <link rel="stylesheet" href="./static/css/requestarr-discover.css?v=1.3.5">
+    <link rel="stylesheet" href="./static/css/instance-editor.css?v=1.0.2">
+    <link rel="stylesheet" href="./static/css/media-hunt-detail.css?v=1.5.0">
+    <link rel="stylesheet" href="./static/css/media-hunt-tv.css?v=1.0.0">
+    
+    <div class="requestarr-content">
+        <!-- Single header bar: back+breadcrumb (left) + sponsor/partner (right) — all inside the bordered toolbar -->
+        <div class="reqset-toolbar page-header-bar requestarr-header-bar">
+            <div class="reqset-toolbar-left">
+                <div id="requestarr-header-discover" class="requestarr-view-header" style="display: flex;">
+                    <a href="./#home" class="reqset-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="reqset-breadcrumb"><i class="fas fa-plus-circle"></i><span>Requests</span><i class="fas fa-chevron-right reqset-breadcrumb-sep"></i><span>Discover</span></div>
+                </div>
+                <div id="requestarr-header-search" class="requestarr-view-header" style="display: none;">
+                    <a href="./#requestarr" class="reqset-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="reqset-breadcrumb"><i class="fas fa-search"></i><span>Requests</span><i class="fas fa-chevron-right reqset-breadcrumb-sep"></i><span>Search Results</span></div>
+                </div>
+                <div id="requestarr-header-movies" class="requestarr-view-header" style="display: none;">
+                    <a href="./#requestarr" class="reqset-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="reqset-breadcrumb"><i class="fas fa-film"></i><span>Requests</span><i class="fas fa-chevron-right reqset-breadcrumb-sep"></i><span>Movies</span></div>
+                </div>
+                <div id="requestarr-header-tv" class="requestarr-view-header" style="display: none;">
+                    <a href="./#requestarr" class="reqset-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="reqset-breadcrumb"><i class="fas fa-tv"></i><span>Requests</span><i class="fas fa-chevron-right reqset-breadcrumb-sep"></i><span>TV Shows</span></div>
+                </div>
+                <div id="requestarr-header-hidden" class="requestarr-view-header" style="display: none;">
+                    <a href="./#requestarr" class="reqset-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                    <div class="reqset-breadcrumb"><i class="fas fa-eye-slash"></i><span>Requests</span><i class="fas fa-chevron-right reqset-breadcrumb-sep"></i><span>Hidden Media</span></div>
+                </div>
+            </div>
+            <div class="reqset-toolbar-right">
+            </div>
+        </div>
+
+        <!-- Global Search Bar — below header, above content -->
+        <div class="global-search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="global-search-input" placeholder="Search Movies & TV">
+        </div>
+
+        <!-- Search Results View -->
+        <div id="search-results-view" class="requestarr-view" style="display: none;">
+            <h2 class="search-results-title" style="margin-top: 0;">Search Results</h2>
+            <div id="search-results-grid" class="search-results-grid">
+                <!-- Results populated by JS -->
+            </div>
+        </div>
+
+        <!-- Discover View -->
+        <div id="requestarr-discover-view" class="requestarr-view active" style="display: block;">
+            <!-- Instance Selectors -->
+            <div class="discover-instance-controls">
+                <div class="instance-selector-container">
+                    <select id="discover-movie-instance-select" class="control-select instance-select">
+                        <option value="">Loading movie instances...</option>
+                    </select>
+                </div>
+                <div class="instance-selector-container">
+                    <select id="discover-tv-instance-select" class="control-select instance-select">
+                        <option value="">Loading TV instances...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Smart Hunt Section (above existing carousels) -->
+            <section class="carousel-section" id="discover-smarthunt-section">
+                <div class="section-title-container">
+                    <h2 class="section-title">Smart Hunt <span class="fire-emoji smarthunt-flame">🔥</span></h2>
+                </div>
+                <div class="trending-bar"></div>
+                <div class="carousel-container">
+                    <button class="carousel-arrow left" data-target="discover-smarthunt-carousel">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="discover-smarthunt-carousel" class="media-carousel">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading Smart Hunt...</p>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow right" data-target="discover-smarthunt-carousel">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Trending Section -->
+            <section class="carousel-section">
+                <div class="section-title-container">
+                    <h2 class="section-title">Trending This Week <span class="fire-emoji">📈</span></h2>
+                </div>
+                <div class="carousel-container">
+                    <button class="carousel-arrow left" data-target="trending-carousel">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="trending-carousel" class="media-carousel">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading trending content...</p>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow right" data-target="trending-carousel">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Popular TV Section -->
+            <section class="carousel-section">
+                <div class="section-title-container">
+                    <h2 class="section-title">Popular TV Shows <span class="tv-emoji">📺</span></h2>
+                </div>
+                <div class="carousel-container">
+                    <button class="carousel-arrow left" data-target="popular-tv-carousel">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="popular-tv-carousel" class="media-carousel">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading TV shows...</p>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow right" data-target="popular-tv-carousel">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Popular Movies Section -->
+            <section class="carousel-section">
+                <div class="section-title-container">
+                    <h2 class="section-title">Popular Movies <span class="movie-emoji">🎬</span></h2>
+                </div>
+                <div class="carousel-container">
+                    <button class="carousel-arrow left" data-target="popular-movies-carousel">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="popular-movies-carousel" class="media-carousel">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading movies...</p>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow right" data-target="popular-movies-carousel">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Movies View -->
+        <div id="requestarr-movies-view" class="requestarr-view" style="display: none;">
+            <!-- Controls Bar -->
+            <div class="movies-controls">
+                <div class="instance-selector-container">
+                    <select id="movies-instance-select" class="control-select instance-select">
+                        <option value="">Loading instances...</option>
+                    </select>
+                </div>
+                <div class="sort-dropdown">
+                    <select id="movies-sort" class="control-select">
+                        <option value="popularity.desc">Popularity</option>
+                        <option value="vote_average.desc">Rating</option>
+                        <option value="release_date.desc">Release Date Descending</option>
+                        <option value="release_date.asc">Release Date Ascending</option>
+                        <option value="title.asc">Title (A-Z)</option>
+                        <option value="title.desc">Title (Z-A)</option>
+                    </select>
+                </div>
+                <button class="filter-button" id="movies-filter-btn">
+                    <i class="fas fa-filter"></i>
+                    <span id="movies-filter-count">0 Active Filters</span>
+                </button>
+            </div>
+            
+            <!-- Movies Grid -->
+            <div id="movies-grid" class="media-grid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading movies...</p>
+                </div>
+            </div>
+            
+            <!-- Infinite scroll sentinel -->
+            <div class="load-more-container">
+                <div id="movies-scroll-sentinel" style="height: 1px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <!-- TV Shows View -->
+        <div id="requestarr-tv-view" class="requestarr-view" style="display: none;">
+            <!-- Controls Bar -->
+            <div class="movies-controls">
+                <div class="instance-selector-container">
+                    <select id="tv-instance-select" class="control-select instance-select">
+                        <option value="">Loading instances...</option>
+                    </select>
+                </div>
+                <div class="sort-dropdown">
+                    <select id="tv-sort" class="control-select">
+                        <option value="popularity.desc">Popularity</option>
+                        <option value="vote_average.desc">Rating</option>
+                        <option value="first_air_date.desc">First Air Date Descending</option>
+                        <option value="first_air_date.asc">First Air Date Ascending</option>
+                        <option value="name.asc">Title (A-Z)</option>
+                        <option value="name.desc">Title (Z-A)</option>
+                    </select>
+                </div>
+                <button class="filter-button" id="tv-filter-btn">
+                    <i class="fas fa-filter"></i>
+                    <span id="tv-filter-count">0 Active Filters</span>
+                </button>
+            </div>
+            
+            <!-- TV Shows Grid -->
+            <div id="tv-grid" class="media-grid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading TV shows...</p>
+                </div>
+            </div>
+            
+            <!-- Infinite scroll sentinel -->
+            <div class="load-more-container">
+                <div id="tv-scroll-sentinel" style="height: 1px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <!-- Hidden Media View -->
+        <div id="requestarr-hidden-view" class="requestarr-view">
+            <!-- Search Bar - Full Width -->
+            <div class="hidden-media-search">
+                <i class="fas fa-search"></i>
+                <input id="hidden-media-search" class="hidden-media-search-input" type="text" placeholder="Search hidden media...">
+            </div>
+
+            <!-- Instance Selector -->
+            <div class="hidden-media-instance-row">
+                <select id="hidden-media-instance" class="control-select instance-select">
+                    <option value="">Select an Instance</option>
+                </select>
+            </div>
+            
+            <!-- Hidden Media Grid -->
+            <div id="hidden-media-grid" class="media-grid">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading hidden media...</p>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="hidden-media-pagination" class="pagination-container" style="display: none;">
+                <button id="hidden-prev-page" class="pagination-btn">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span id="hidden-page-info" class="page-info">Page 1 of 1</span>
+                <button id="hidden-next-page" class="pagination-btn">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings View -->
+        <div id="requestarr-settings-view" class="requestarr-view">
+            <div class="reqset-container">
+
+                <!-- Toolbar -->
+                <div class="reqset-toolbar">
+                    <div class="reqset-toolbar-left">
+                        <button class="reqset-back-btn" onclick="window.RequestarrDiscover && window.RequestarrDiscover.switchView('discover')">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <div class="reqset-breadcrumb">
+                            <i class="fas fa-cog"></i>
+                            <span>Requestarr</span>
+                            <i class="fas fa-chevron-right reqset-breadcrumb-sep"></i>
+                            <span>Settings</span>
+                        </div>
+                    </div>
+                    <div class="reqset-toolbar-right">
+                        <button id="reqset-save-all-btn" class="reqset-save-btn" onclick="window._reqsetSaveAll && window._reqsetSaveAll()">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Two-column layout -->
+                <div class="reqset-grid">
+
+                    <!-- Left Column: Filters -->
+                    <div class="reqset-card">
+                        <div class="reqset-card-header">
+                            <div class="reqset-card-icon reqset-icon-blue">
+                                <i class="fas fa-filter"></i>
+                            </div>
+                            <h3>Discovery Filters</h3>
+                        </div>
+                        <div class="reqset-card-body">
+                            <div class="settings-field">
+                                <label for="discover-region">Region</label>
+                                <div class="custom-select-wrapper">
+                                    <div id="region-select-display" class="custom-select-display">
+                                        <span id="region-selected-text">🇺🇸 United States</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div id="region-dropdown" class="custom-select-dropdown" style="display: none;">
+                                        <div id="region-list" class="custom-select-list"></div>
+                                    </div>
+                                </div>
+                                <small>Filter via Regional Availability</small>
+                            </div>
+
+                            <div class="settings-field">
+                                <label for="discover-providers">Providers</label>
+                                <div class="language-select-wrapper">
+                                    <div id="provider-tags" class="language-tags"></div>
+                                    <input type="text" id="discover-providers" class="settings-input" placeholder="Select providers..." readonly>
+                                    <div id="provider-dropdown" class="language-dropdown" style="display: none;">
+                                        <div id="provider-list" class="language-list"></div>
+                                    </div>
+                                </div>
+                                <small>Filter via Streaming Providers (uses selected region)</small>
+                            </div>
+
+                            <div class="settings-field">
+                                <label for="discover-language">Language(s)</label>
+                                <div class="language-select-wrapper">
+                                    <div id="language-tags" class="language-tags"></div>
+                                    <input type="text" id="discover-language" class="settings-input" placeholder="Select languages..." readonly>
+                                    <div id="language-dropdown" class="language-dropdown" style="display: none;">
+                                        <div id="language-list" class="language-list">
+                                            <div class="language-item" data-code="">All Languages</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small>Filter via Original Language(s)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Blacklisted Genres -->
+                    <div class="reqset-card">
+                        <div class="reqset-card-header">
+                            <div class="reqset-card-icon reqset-icon-red">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <h3>Blacklisted Genres</h3>
+                        </div>
+                        <div class="reqset-card-body">
+                            <p class="reqset-card-desc">Genres added here are hidden from the Movies and TV filter dropdowns. Users cannot select these genres when filtering discovery.</p>
+
+                            <div class="settings-field">
+                                <label for="blacklist-tv-genre-select">Blacklisted TV Genres</label>
+                                <select id="blacklist-tv-genre-select" class="settings-select">
+                                    <option value="">Select a genre to blacklist...</option>
+                                </select>
+                                <div id="blacklisted-tv-genres-list" class="blacklisted-genres-pills"></div>
+                            </div>
+
+                            <div class="settings-field">
+                                <label for="blacklist-movie-genre-select">Blacklisted Movie Genres</label>
+                                <select id="blacklist-movie-genre-select" class="settings-select">
+                                    <option value="">Select a genre to blacklist...</option>
+                                </select>
+                                <div id="blacklisted-movie-genres-list" class="blacklisted-genres-pills"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Movies Filters Side Panel -->
+    <div id="movies-filter-modal" class="filter-panel" style="display: none;">
+        <div class="filter-backdrop" onclick="window.RequestarrDiscover && window.RequestarrDiscover.closeFiltersModal && window.RequestarrDiscover.closeFiltersModal()"></div>
+        <div class="filter-panel-content">
+            <div class="filter-panel-header">
+                <h2>Filters</h2>
+                <button class="filter-close" onclick="window.RequestarrDiscover && window.RequestarrDiscover.closeFiltersModal && window.RequestarrDiscover.closeFiltersModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="filter-panel-body">
+                <div class="filter-active-badge">
+                    <span id="filter-active-count">0 Active Filters</span>
+                </div>
+                
+                <!-- Hide items in library (filter out what we have) -->
+                <div class="filter-group">
+                    <label class="filter-toggle-label">
+                        <input type="checkbox" id="hide-available-movies" class="filter-checkbox">
+                        <span class="filter-toggle-text">Hide items in library</span>
+                    </label>
+                    <small class="filter-help">Only show titles you don't have yet</small>
+                </div>
+                
+                <!-- Genres -->
+                <div class="filter-group">
+                    <label class="filter-label">Genres</label>
+                    
+                    <!-- Selected Genre Pills -->
+                    <div class="selected-genres-container" id="selected-genres" style="display: none;">
+                        <!-- Pills will be added here -->
+                    </div>
+                    
+                    <!-- Genre Dropdown -->
+                    <div class="genre-select-wrapper">
+                        <input 
+                            type="text" 
+                            id="genre-search-input" 
+                            class="genre-search-input" 
+                            placeholder="Select genres..." 
+                            readonly
+                        >
+                        <div id="genre-dropdown" class="genre-dropdown" style="display: none;">
+                            <div id="genre-list" class="genre-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Release Year Range -->
+                <div class="filter-group">
+                    <label class="filter-label">Release Year</label>
+                    <div class="filter-range-text" id="year-display">Movies from 1900 to 2029</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="year-range"></div>
+                        <input type="range" id="filter-year-min" class="range-min" value="1900" min="1900" max="2029" step="1">
+                        <input type="range" id="filter-year-max" class="range-max" value="2029" min="1900" max="2029" step="1">
+                    </div>
+                </div>
+                
+                <!-- Runtime -->
+                <div class="filter-group">
+                    <label class="filter-label">Runtime</label>
+                    <div class="filter-range-text" id="runtime-display">0-400 minute runtime</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="runtime-range"></div>
+                        <input type="range" id="filter-runtime-min" class="range-min" value="0" min="0" max="400" step="1">
+                        <input type="range" id="filter-runtime-max" class="range-max" value="400" min="0" max="400" step="1">
+                    </div>
+                </div>
+                
+                <!-- TMDB User Score -->
+                <div class="filter-group">
+                    <label class="filter-label">TMDB User Score</label>
+                    <div class="filter-range-text" id="rating-display">Ratings between 0 and 10</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="rating-range"></div>
+                        <input type="range" id="filter-rating-min" class="range-min" value="0" min="0" max="10" step="0.1">
+                        <input type="range" id="filter-rating-max" class="range-max" value="10" min="0" max="10" step="0.1">
+                    </div>
+                </div>
+                
+                <!-- TMDB User Vote Count -->
+                <div class="filter-group">
+                    <label class="filter-label">TMDB User Vote Count</label>
+                    <div class="filter-range-text" id="votes-display">Number of votes between 0 and 10000</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="votes-range"></div>
+                        <input type="range" id="filter-votes-min" class="range-min" value="0" min="0" max="10000" step="10">
+                        <input type="range" id="filter-votes-max" class="range-max" value="10000" min="0" max="10000" step="10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TV Shows Filters Side Panel -->
+    <div id="tv-filter-modal" class="filter-panel" style="display: none;">
+        <div class="filter-backdrop" onclick="window.RequestarrDiscover && window.RequestarrDiscover.closeTVFiltersModal && window.RequestarrDiscover.closeTVFiltersModal()"></div>
+        <div class="filter-panel-content">
+            <div class="filter-panel-header">
+                <h2>Filters</h2>
+                <button class="filter-close" onclick="window.RequestarrDiscover && window.RequestarrDiscover.closeTVFiltersModal && window.RequestarrDiscover.closeTVFiltersModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="filter-panel-body">
+                <div class="filter-active-badge">
+                    <span id="tv-filter-active-count">0 Active Filters</span>
+                </div>
+                
+                <!-- Hide items in library (filter out what we have) -->
+                <div class="filter-group">
+                    <label class="filter-toggle-label">
+                        <input type="checkbox" id="hide-available-tv" class="filter-checkbox">
+                        <span class="filter-toggle-text">Hide items in library</span>
+                    </label>
+                    <small class="filter-help">Only show titles you don't have yet</small>
+                </div>
+                
+                <!-- Genres -->
+                <div class="filter-group">
+                    <label class="filter-label">Genres</label>
+                    
+                    <!-- Selected Genre Pills -->
+                    <div class="selected-genres-container" id="tv-selected-genres" style="display: none;">
+                        <!-- Pills will be added here -->
+                    </div>
+                    
+                    <!-- Genre Dropdown -->
+                    <div class="genre-select-wrapper">
+                        <input 
+                            type="text" 
+                            id="tv-genre-search-input" 
+                            class="genre-search-input" 
+                            placeholder="Select genres..." 
+                            readonly
+                        >
+                        <div id="tv-genre-dropdown" class="genre-dropdown" style="display: none;">
+                            <div id="tv-genre-list" class="genre-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- First Air Year Range -->
+                <div class="filter-group">
+                    <label class="filter-label">First Air Year</label>
+                    <div class="filter-range-text" id="tv-year-display">TV shows from 1900 to 2029</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="tv-year-range"></div>
+                        <input type="range" id="tv-filter-year-min" class="range-min" value="1900" min="1900" max="2029" step="1">
+                        <input type="range" id="tv-filter-year-max" class="range-max" value="2029" min="1900" max="2029" step="1">
+                    </div>
+                </div>
+                
+                <!-- TMDB User Score -->
+                <div class="filter-group">
+                    <label class="filter-label">TMDB User Score</label>
+                    <div class="filter-range-text" id="tv-rating-display">Ratings between 0 and 10</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="tv-rating-range"></div>
+                        <input type="range" id="tv-filter-rating-min" class="range-min" value="0" min="0" max="10" step="0.1">
+                        <input type="range" id="tv-filter-rating-max" class="range-max" value="10" min="0" max="10" step="0.1">
+                    </div>
+                </div>
+                
+                <!-- TMDB User Vote Count -->
+                <div class="filter-group">
+                    <label class="filter-label">TMDB User Vote Count</label>
+                    <div class="filter-range-text" id="tv-votes-display">Number of votes between 0 and 10000</div>
+                    <div class="dual-range-slider">
+                        <div class="slider-track"></div>
+                        <div class="slider-range" id="tv-votes-range"></div>
+                        <input type="range" id="tv-filter-votes-min" class="range-min" value="0" min="0" max="10000" step="10">
+                        <input type="range" id="tv-filter-votes-max" class="range-max" value="10000" min="0" max="10000" step="10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Smart Hunt Settings View -->
+    <div id="requestarr-smarthunt-settings-view" class="requestarr-view" style="display: none;">
+        <div class="reqset-container">
+            <!-- Toolbar -->
+            <div class="reqset-toolbar">
+                <div class="reqset-toolbar-left">
+                    <button class="reqset-back-btn" onclick="window.RequestarrDiscover && window.RequestarrDiscover.switchView('discover')">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <div class="reqset-breadcrumb">
+                        <i class="fas fa-fire"></i>
+                        <span>Requestarr</span>
+                        <i class="fas fa-chevron-right reqset-breadcrumb-sep"></i>
+                        <span>Smart Hunt</span>
+                    </div>
+                </div>
+                <div class="reqset-toolbar-right">
+                    <button id="smarthunt-save-btn" class="reqset-save-btn">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="reqset-grid">
+
+                <!-- Left Column: Smart Hunt Mix -->
+                <div class="reqset-card">
+                    <div class="reqset-card-header">
+                        <div class="reqset-card-icon reqset-icon-blue">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3>Smart Hunt Mix</h3>
+                    </div>
+                    <div class="reqset-card-body">
+                        <div class="settings-field">
+                            <label class="toggle-label">
+                                <span>Hide Library Items</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="smarthunt-hide-library" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </label>
+                            <small>Hide items already in library, requested, or hidden. Uses instances selected on Discover or default instances on Home.</small>
+                        </div>
+                        <div class="settings-field">
+                            <label for="smarthunt-cache-ttl">Result Cache Duration</label>
+                            <select id="smarthunt-cache-ttl" class="settings-input">
+                                <option value="0">Disabled (always fresh)</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="60" selected>1 Hour (default)</option>
+                                <option value="360">6 Hours</option>
+                                <option value="720">12 Hours</option>
+                                <option value="1080">18 Hours</option>
+                                <option value="1440">24 Hours</option>
+                            </select>
+                            <small>How long Smart Hunt caches results before fetching new ones. Applies to both the server-side API cache and the browser cache. Also affects Discover page carousels (Trending, Popular Movies, Popular TV). 18h aligns with the metadata refresh cycle. Shorter = fresher results but more API calls.</small>
+                        </div>
+                        <div class="settings-field">
+                            <label for="smarthunt-min-rating">Minimum TMDB Rating</label>
+                            <input type="number" id="smarthunt-min-rating" min="0" max="10" step="0.1" value="6.0" class="settings-input">
+                            <small>TMDB ratings range from 0 to 10 (decimals allowed). Only items rated at or above this score are included.</small>
+                        </div>
+                        <div class="settings-field">
+                            <label for="smarthunt-min-votes">Minimum Vote Count</label>
+                            <input type="number" id="smarthunt-min-votes" min="0" max="100000" step="1" value="50" class="settings-input">
+                            <small>Minimum number of TMDB votes required. Filters out obscure titles with too few ratings. Set to 0 to disable.</small>
+                        </div>
+                        <div class="settings-field">
+                            <label>Year Range</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="number" id="smarthunt-year-start" min="1900" max="2030" value="2000" class="settings-input" style="flex:1;">
+                                <span style="color: #888;">to</span>
+                                <input type="number" id="smarthunt-year-end" min="1900" max="2030" value="2027" class="settings-input" style="flex:1;">
+                            </div>
+                            <small>Filter results to this release year range</small>
+                        </div>
+                        <div class="settings-field" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(90, 109, 137, 0.15);">
+                            <small style="color: #9ca3af;">
+                                <i class="fas fa-info-circle" style="margin-right: 4px;"></i>
+                                <a href="#requestarr-settings" style="color: #818cf8; text-decoration: none;">Discovery Filters</a>
+                                (region, languages, providers) and
+                                <a href="#requestarr-settings" style="color: #818cf8; text-decoration: none;">Blacklisted Genres</a>
+                                from Requestarr Settings also apply to Smart Hunt results.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Category Weights -->
+                <div class="reqset-card">
+                    <div class="reqset-card-header">
+                        <div class="reqset-card-icon reqset-icon-purple">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <h3>Category Weights</h3>
+                    </div>
+                    <div class="reqset-card-body">
+                        <div class="smarthunt-total-bar" id="smarthunt-total-bar">
+                            <span>Total: </span><strong id="smarthunt-total-value">100</strong><span>%</span>
+                        </div>
+
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Similar to Library</span>
+                                <small>Recommendations based on what's in your library</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-similar_library" min="0" max="100" value="40" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Trending</span>
+                                <small>What's popular right now</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-trending" min="0" max="100" value="15" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Hidden Gems</span>
+                                <small>High quality, low popularity picks</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-hidden_gems" min="0" max="100" value="10" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>New Releases</span>
+                                <small>Released in the last 3 months</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-new_releases" min="0" max="100" value="10" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Top Rated</span>
+                                <small>Highest rated on TMDB</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-top_rated" min="0" max="100" value="10" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Genre Deep Dive</span>
+                                <small>Genres your library is heavy in</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-genre_mix" min="0" max="100" value="5" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Upcoming</span>
+                                <small>Not released yet</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-upcoming" min="0" max="100" value="5" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="smarthunt-weight-row">
+                            <div class="smarthunt-weight-label">
+                                <span>Random / Surprise Me</span>
+                                <small>Surprise picks (auto-fills remaining %)</small>
+                            </div>
+                            <div class="smarthunt-weight-input">
+                                <input type="number" id="smarthunt-pct-random" min="0" max="100" value="5" class="settings-input smarthunt-pct">
+                                <span>%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requestarr Request Modal – Two-column poster + form layout (matches Movie Hunt design) -->
+    <div id="media-modal" class="mh-req-modal" style="display: none;">
+        <div class="modal-backdrop" id="requestarr-modal-backdrop"></div>
+        <div class="mh-req-card">
+            <button type="button" class="mh-req-close" id="requestarr-modal-close" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="mh-req-layout">
+                <!-- Poster column -->
+                <div class="mh-req-poster">
+                    <img id="requestarr-modal-poster-img" src="./static/images/blackout.jpg" alt="" onerror="this.src='./static/images/blackout.jpg'">
+                </div>
+                <!-- Form column -->
+                <div class="mh-req-form">
+                    <div class="mh-req-header">
+                        <span class="mh-req-label" id="requestarr-modal-label">Request Movie</span>
+                        <h2 class="mh-req-title" id="requestarr-modal-title"></h2>
+                        <div class="mh-req-meta" id="requestarr-modal-meta"></div>
+                    </div>
+                    <div class="mh-req-status" id="requestarr-modal-status-container"></div>
+                    <div class="mh-req-fields">
+                        <div class="mh-req-field">
+                            <label>Instance</label>
+                            <div class="mh-req-instance-wrap">
+                                <a href="#" id="modal-instance-info-icon" class="mh-req-root-info-icon" style="display: none;" title="Go to Instances to configure" aria-label="Configure instances"><i class="fas fa-info-circle"></i></a>
+                                <select id="modal-instance-select" aria-label="Instance">
+                                    <option value="">Loading...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mh-req-field">
+                            <label>Root Folder</label>
+                            <div class="mh-req-root-folder-wrap">
+                                <a href="#" id="modal-root-folder-info-icon" class="mh-req-root-info-icon" style="display: none;" title="Go to Root Folders to configure" aria-label="Configure root folders"><i class="fas fa-info-circle"></i></a>
+                                <select id="modal-root-folder">
+                                    <option value="">Loading...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mh-req-field">
+                            <label>Quality Profile</label>
+                            <select id="modal-quality-profile">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+                        <div class="mh-req-field mh-hidden" id="requestarr-modal-monitor-wrap">
+                            <label>Monitor</label>
+                            <select id="modal-monitor" aria-label="Monitor">
+                                <option value="all_episodes">All Episodes</option>
+                                <option value="future_episodes">Future Episodes</option>
+                                <option value="missing_episodes">Missing Episodes</option>
+                                <option value="existing_episodes">Existing Episodes</option>
+                                <option value="recent_episodes">Recent Episodes</option>
+                                <option value="pilot_episode">Pilot Episode</option>
+                                <option value="first_season">First Season</option>
+                                <option value="last_season">Last Season</option>
+                                <option value="monitor_specials">Monitor Specials</option>
+                                <option value="unmonitor_specials">Unmonitor Specials</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                        <div class="mh-req-field mh-hidden" id="requestarr-modal-movie-monitor-wrap">
+                            <label>Monitor</label>
+                            <select id="modal-movie-monitor" aria-label="Monitor">
+                                <option value="movie_only" selected>Movie Only</option>
+                                <option value="movie_and_collection">Movie and Collection</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                        <div class="mh-req-field mh-hidden" id="requestarr-modal-min-availability-wrap">
+                            <label>Minimum Availability</label>
+                            <select id="modal-minimum-availability" aria-label="Minimum Availability">
+                                <option value="released" selected>Released</option>
+                                <option value="inCinemas">In Cinemas</option>
+                                <option value="announced">Announced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mh-req-actions">
+                        <label class="mh-req-checkbox-wrap mh-hidden" id="requestarr-modal-start-search-wrap">
+                            <input type="checkbox" id="modal-start-search" checked>
+                            <span>Start search for missing movie</span>
+                        </label>
+                        <div class="mh-req-buttons">
+                            <button type="button" class="mh-req-btn mh-req-btn-cancel" id="requestarr-modal-cancel">Cancel</button>
+                            <button type="button" class="mh-req-btn mh-req-btn-submit" id="modal-request-btn">Request</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
