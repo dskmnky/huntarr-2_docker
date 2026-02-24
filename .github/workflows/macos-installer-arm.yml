@@ -5,10 +5,16 @@ permissions:
 
 on:
   push:
-    branches: ['*']
+    branches: [main]
     tags: ['*']
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+# Prevent duplicate runs on the same branch/PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-macos-arm-installer:
@@ -17,12 +23,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       
       - name: Set up Python 3.12
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       
@@ -163,7 +169,7 @@ jobs:
       
       - name: Upload to release
         if: steps.meta.outputs.IS_TAG == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: '*.pkg'
         env:
