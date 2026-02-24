@@ -34,7 +34,7 @@
             <div class="settings-group">
                 <h3>System Settings</h3>
                 <div class="setting-item">
-                    <label for="show_trending"><a href="https://plexguide.github.io/Huntarr.io/settings/settings.html#show-trending" class="info-icon" title="Learn more about showing trending content on home page" target="_blank" rel="noopener"><i class="fas fa-info-circle"></i></a>Show Trending:</label>
+                    <label for="show_trending"><i class="fas fa-info-circle info-icon"></i>Show Trending:</label>
                     <label class="toggle-switch">
                         <input type="checkbox" id="show_trending" ${
                           settings.show_trending === true ? "checked" : ""
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="setting-item">
-                    <label for="timezone"><a href="https://plexguide.github.io/Huntarr.io/settings/settings.html#timezone" class="info-icon" title="Set your timezone for accurate time display" target="_blank" rel="noopener"><i class="fas fa-info-circle"></i></a>Timezone:</label>
+                    <label for="timezone"><i class="fas fa-info-circle info-icon"></i>Timezone:</label>
                     <select id="timezone" name="timezone" style="width: 300px; padding: 8px 12px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1); background-color: #1f2937; color: #d1d5db;">
                         ${(() => {
                           const predefinedTimezones = [
@@ -77,7 +77,7 @@
             <div class="settings-group">
                 <h3>Security</h3>
                 <div class="setting-item">
-                    <label for="auth_mode"><a href="https://plexguide.github.io/Huntarr.io/settings/settings.html#authentication-mode" class="info-icon" title="Learn more about authentication modes" target="_blank" rel="noopener"><i class="fas fa-info-circle"></i></a>Authentication Mode:</label>
+                    <label for="auth_mode"><i class="fas fa-info-circle info-icon"></i>Authentication Mode:</label>
                     <select id="auth_mode" name="auth_mode" style="width: 300px; padding: 8px 12px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.1); background-color: #1f2937; color: #d1d5db;">
                         <option value="login" ${
                           settings.auth_mode === "login" ||

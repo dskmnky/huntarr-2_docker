@@ -1903,7 +1903,7 @@ document.head.appendChild(styleEl);
                     
                     <div class="editor-section exempt-tags-subsection" style="margin-top: 16px;">
                         <div class="editor-section-title"><span class="section-title-text"><span class="section-title-icon accent-exempt"><i class="fas fa-shield-alt"></i></span>Exempt Tags</span></div>
-                        <p class="editor-help-text" style="margin-bottom: 12px;">Items with any of these tags are skipped for missing and upgrade searches. If the tag is removed in the app, Huntarr will process the item again. <a href="https://github.com/plexguide/Huntarr.io/issues/676" target="_blank" rel="noopener" style="color: #94a3b8;">#676</a></p>
+                        <p class="editor-help-text" style="margin-bottom: 12px;">Items with any of these tags are skipped for missing and upgrade searches. If the tag is removed in the app, Huntarr will process the item again.</p>
                         <div class="editor-field-group">
                             <div class="editor-setting-item">
                                 <label>Add exempt tag</label>
@@ -3167,7 +3167,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_enabled">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Enable or disable Swaparr" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Enable Swaparr:
@@ -3183,7 +3183,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_max_strikes">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Number of strikes before removal" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Max Strikes:
@@ -3196,7 +3196,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_max_download_time">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Maximum time before considering download stalled" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Max Download Time:
@@ -3209,7 +3209,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_ignore_above_size">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Ignore downloads larger than this size" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Ignore Above Size:
@@ -3222,7 +3222,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_remove_from_client">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Remove downloads from download client" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Remove from Client:
@@ -3238,7 +3238,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_research_removed">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Automatically blocklist and re-search removed downloads" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Re-Search Removed Download:
@@ -3254,7 +3254,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_failed_import_detection">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon" title="Automatically handle failed imports" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Handle Failed Imports:
@@ -3272,7 +3272,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_dry_run">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrdry-run-mode" class="info-icon" title="Test mode - no actual removals" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Dry Run Mode:
@@ -3288,7 +3288,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_ignore_usenet_queued">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrignore-usenet-queued" class="info-icon" title="Ignore queued usenet downloads with 0% progress" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Ignore Queued Usenet:
@@ -3304,7 +3304,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_remove_completed_stalled">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrremove-completed-stalled" class="info-icon" title="Treat 100% complete downloads as stalled" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Remove Completed (100%) Stalled:
@@ -3320,7 +3320,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_sleep_duration">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrsleep-duration" class="info-icon" title="Time between Swaparr cycles" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Sleep Duration (Minutes):
@@ -3346,7 +3346,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_malicious_detection">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrmalicious-file-detection" class="info-icon" title="Enable malicious file detection" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Malicious File Detection:
@@ -3364,7 +3364,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_malicious_extensions_input">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrmalicious-extensions" class="info-icon" title="File extensions to consider malicious" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Malicious File Extensions:
@@ -3383,7 +3383,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_suspicious_patterns_input">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrsuspicious-patterns" class="info-icon" title="Suspicious filename patterns" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Suspicious Patterns:
@@ -3409,7 +3409,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_age_based_removal">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrage-based-removal" class="info-icon" title="Enable age-based removal" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Enable Age-Based Removal:
@@ -3425,7 +3425,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_max_age_days">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrmax-age-days" class="info-icon" title="Maximum age before removal" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Maximum Age (Days):
@@ -3445,7 +3445,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_quality_based_removal">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrquality-based-removal" class="info-icon" title="Enable quality-based filtering" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Enable Quality-Based Filtering:
@@ -3463,7 +3463,7 @@ document.head.appendChild(styleEl);
                 
                 <div class="setting-item">
                     <label for="swaparr_quality_patterns_input">
-                        <a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparrblocked-quality-patterns" class="info-icon" title="Quality patterns to block" target="_blank" rel="noopener">
+                        <span class="info-icon" title="
                             <i class="fas fa-info-circle"></i>
                         </a>
                         Blocked Quality Patterns:
@@ -12449,7 +12449,7 @@ document.head.appendChild(styleEl);
             '<div class="editor-setting-item" style="margin-top: 6px;"><label>Upgrade Items Tag</label><input type="text" id="mh-editor-tag-upgrade" value="' + escapeAttr((safe.custom_tags && safe.custom_tags.upgrade) ? safe.custom_tags.upgrade : 'huntarr-upgrade') + '" placeholder="huntarr-upgrade" maxlength="25"></div>' +
             '<p class="editor-help-text">Tag added to movies when they\'re upgraded in cutoff mode (max 25 characters). Not used when Upgrade Selection Method is Tags.</p></div>' +
             '<div class="editor-section" style="border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 10px; padding: 14px; background: rgba(231, 76, 60, 0.06); margin-top: 16px;"><div class="editor-section-title"><div class="section-title-text"><span class="section-title-icon accent-exempt"><i class="fas fa-ban"></i></span>EXEMPT TAGS</div></div>' +
-            '<p class="editor-help-text" style="margin-bottom: 12px;">Items with any of these tags are skipped for missing and upgrade searches. If the tag is removed in the app, Huntarr will process the item again. <a href="https://github.com/plexguide/Huntarr.io/issues/676" target="_blank" rel="noopener" style="color: #94a3b8;">#676</a></p>' +
+            '<p class="editor-help-text" style="margin-bottom: 12px;">Items with any of these tags are skipped for missing and upgrade searches. If the tag is removed in the app, Huntarr will process the item again.</p>' +
             '<div class="editor-field-group"><div class="editor-setting-item"><label>Add exempt tag</label><div style="display: flex; gap: 8px; align-items: center;"><input type="text" id="mh-editor-exempt-tag-input" placeholder="Type a tag to exempt..." style="flex: 1;" maxlength="50"><button type="button" class="btn-card" id="mh-editor-exempt-tag-add" style="padding: 8px 14px; white-space: nowrap;">Add</button></div></div>' +
             '<p class="editor-help-text" style="color: #94a3b8; font-size: 0.85rem;">Tag &quot;upgradinatorr&quot; cannot be added.</p>' +
             '<div id="mh-editor-exempt-tags-list" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; min-height: 24px;">' + exemptTagsHtml + '</div></div></div></div>' +

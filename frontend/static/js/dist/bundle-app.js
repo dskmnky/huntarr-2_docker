@@ -212,9 +212,9 @@ let huntarrUI = {
         // Load current version
         this.loadCurrentVersion();
         // Load latest version from GitHub
-        this.loadLatestVersion();
+        // this.loadLatestVersion(); // Removed - no upstream version check
         // Load latest beta version from GitHub
-        this.loadBetaVersion();
+        // this.loadBetaVersion(); // Removed - no upstream version check
         // Load GitHub star count
         // this.loadGitHubStarCount(); // Removed external link
         
