@@ -1,0 +1,83 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+        
+        **Before submitting**, please:
+        - Check existing issues to avoid duplicates
+        - Make sure you're on the latest version
+
+  - type: input
+    id: version
+    attributes:
+      label: Huntarr-2 Version
+      description: What version are you running? (check Settings → About)
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Installation Method
+      options:
+        - Docker
+        - Manual (Python)
+        - Windows Installer
+        - macOS Installer
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect to happen?
+      placeholder: |
+        When I click X, Y happens instead of Z.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. Go to Settings
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs
+      description: Paste any relevant log output (Settings → Logs)
+      render: shell
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Any relevant environment details
+      placeholder: |
+        - OS: Ubuntu 22.04 / Windows 11 / macOS 14
+        - Browser: Chrome 120
+        - Docker version: 24.0.7 (if applicable)
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues and this is not a duplicate
+          required: true
+        - label: I am running the latest version of Huntarr-2
+          required: true
