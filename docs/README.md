@@ -1,6 +1,6 @@
 # Huntarr Documentation
 
-This is the documentation site for [Huntarr](https://github.com/plexguide/Huntarr.io), served via GitHub Pages.
+This is the documentation site for [Huntarr](https://github.com/xtamtamx/huntarr-2), served via GitHub Pages.
 
 ## Structure
 

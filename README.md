@@ -35,7 +35,7 @@ Huntarr is a media automation companion that supercharges your *arr stack. It wo
 version: '3.8'
 services:
   huntarr:
-    image: huntarr/huntarr:latest
+    image: ghcr.io/xtamtamx/huntarr-2:latest
     container_name: huntarr
     ports:
       - "9705:9705"
