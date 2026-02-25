@@ -159,13 +159,13 @@ fetch('./api/endpoint');
 <label><a href="#" class="info-icon">
 
 // ✅ FIXED - GitHub documentation with anchors (consolidated 3rd Party Apps page)
-<label><a href="https://plexguide.github.io/Huntarr.io/apps/index.html#radarr" class="info-icon">
-<label><a href="https://plexguide.github.io/Huntarr.io/apps/index.html#radarr" class="info-icon">
-<label><a href="https://plexguide.github.io/Huntarr.io/apps/index.html#swaparr" class="info-icon">
+<label><a href="#removed-in-fork" class="info-icon">
+<label><a href="#removed-in-fork" class="info-icon">
+<label><a href="#removed-in-fork" class="info-icon">
 ```
-**Pattern:** `https://plexguide.github.io/Huntarr.io/apps/index.html#[app-name]`
+**Pattern:** `#removed-in-forkapps/index.html#[app-name]`
 **Requirements:**
-- Always use `https://plexguide.github.io/Huntarr.io/` domain
+- Always use `#removed-in-fork` domain
 - Include `target="_blank" rel="noopener"` attributes
 - Use specific anchors that match documentation headers
 - Ensure documentation anchors exist before linking
@@ -180,7 +180,7 @@ fetch('./api/endpoint');
 response = requests.post('https://api.github.com/graphql', json={'query': query}, headers=headers)
 
 # ✅ FIXED - Fetch from static manifest updated by GitHub Actions
-response = requests.get("https://plexguide.github.io/Huntarr.io/manifest.json", timeout=10)
+response = requests.get("#removed-in-fork", timeout=10)
 manifest_data = response.json()
 sponsors = manifest_data.get('sponsors', [])
 ```
@@ -393,7 +393,7 @@ grep -r "window.location.href.*= '/" frontend/ --include="*.js" --include="*.htm
 
 # 2. Documentation link violations  
 echo "=== SCANNING FOR DOCUMENTATION LINK VIOLATIONS ==="
-grep -r "href.*plexguide.github.io" frontend/ --include="*.js" | grep -v "plexguide.github.io/Huntarr.io" | wc -l | xargs echo "wrong domain links:"
+grep -r "href.*github.com/xtamtamx/huntarr-2" frontend/ --include="*.js" | grep -v "github.com/xtamtamx/huntarr-2/Huntarr.io" | wc -l | xargs echo "wrong domain links:"
 
 # 3. Hard-coded path violations
 echo "=== SCANNING FOR HARD-CODED PATH VIOLATIONS ==="
@@ -403,7 +403,7 @@ grep -r "/app" src/ --include="*.py" | grep -v "_detect_environment\|_get.*path"
 # 4. Frontend-docs alignment check
 echo "=== CHECKING FRONTEND-DOCS ALIGNMENT ==="
 echo "Frontend anchor references:"
-grep -r "href.*plexguide\.github\.io.*#" frontend/static/js/ | grep -o "#[^\"]*" | sort | uniq | wc -l
+grep -r "href.*REMOVED\.github\.io.*#" frontend/static/js/ | grep -o "#[^\"]*" | sort | uniq | wc -l
 echo "Documentation anchors available:"
 grep -r 'id="[^"]*"' docs/apps/ | grep -o 'id="[^"]*"' | sort | uniq | wc -l
 ```
@@ -597,7 +597,7 @@ grep -r "functionName\|variableName" frontend/ --include="*.js"
 # Catch absolute URLs before they become problems
 grep -r "fetch('/api/" frontend/ --include="*.js"
 grep -r "window.location.href.*= '/" frontend/ --include="*.js" --include="*.html"
-grep -r "href.*plexguide.github.io" frontend/ --include="*.js" | grep -v "plexguide.github.io/Huntarr.io"
+grep -r "href.*github.com/xtamtamx/huntarr-2" frontend/ --include="*.js" | grep -v "github.com/xtamtamx/huntarr-2/Huntarr.io"
 ```
 
 ### Documentation Reality Check & User Experience (2024-12)
@@ -622,7 +622,7 @@ grep -r "href.*plexguide.github.io" frontend/ --include="*.js" | grep -v "plexgu
 **Solution:** Implemented verification system for frontend→docs alignment
 
 **Process:**
-1. Extract all documentation links from frontend: `grep -r "plexguide.github.io.*#" frontend/`
+1. Extract all documentation links from frontend: `grep -r "github.com/xtamtamx/huntarr-2.*#" frontend/`
 2. Extract all anchor IDs from docs: `grep -r 'id="[^"]*"' docs/`
 3. Cross-reference and fix mismatches
 4. Add missing anchor IDs where content exists but ID missing
@@ -630,7 +630,7 @@ grep -r "href.*plexguide.github.io" frontend/ --include="*.js" | grep -v "plexgu
 **Prevention:** Before any documentation changes, verify link alignment:
 ```bash
 # Extract frontend links
-grep -r "href.*plexguide\.github\.io.*#" frontend/static/js/ | grep -o "#[^\"]*" | sort | uniq
+grep -r "href.*REMOVED\.github\.io.*#" frontend/static/js/ | grep -o "#[^\"]*" | sort | uniq
 
 # Extract doc anchors  
 grep -r 'id="[^"]*"' docs/apps/ | grep -o 'id="[^"]*"' | sort | uniq
@@ -729,7 +729,7 @@ echo "   fetch() absolute URLs: $(grep -r "fetch('/api/" frontend/ --include="*.
 echo "   redirect absolute URLs: $(grep -r "window.location.href.*= '/" frontend/ --include="*.js" --include="*.html" | wc -l)"
 echo ""
 echo "2. Documentation violations:"
-echo "   Wrong domain links: $(grep -r "href.*plexguide.github.io" frontend/ --include="*.js" | grep -v "plexguide.github.io/Huntarr.io" | wc -l)"
+echo "   Wrong domain links: $(grep -r "href.*github.com/xtamtamx/huntarr-2" frontend/ --include="*.js" | grep -v "github.com/xtamtamx/huntarr-2/Huntarr.io" | wc -l)"
 echo ""
 echo "3. Database violations:"
 echo "   Direct SQLite calls: $(grep -r "sqlite3.connect\|import sqlite3" src/ --include="*.py" | grep -v "database.py" | wc -l)"
@@ -741,7 +741,7 @@ echo "   /config paths: $(grep -r "/config" src/ --include="*.py" | grep -v "_de
 echo "   /app paths: $(grep -r "/app" src/ --include="*.py" | grep -v "_detect_environment\|_get.*path\|DatabaseManager" | wc -l)"
 echo ""
 echo "5. Frontend-docs alignment:"
-echo "   Frontend anchors: $(grep -r "href.*plexguide\.github\.io.*#" frontend/static/js/ 2>/dev/null | grep -o "#[^\"]*" | sort | uniq | wc -l)"
+echo "   Frontend anchors: $(grep -r "href.*REMOVED\.github\.io.*#" frontend/static/js/ 2>/dev/null | grep -o "#[^\"]*" | sort | uniq | wc -l)"
 echo "   Doc anchors: $(grep -r 'id="[^"]*"' docs/apps/ 2>/dev/null | grep -o 'id="[^"]*"' | sort | uniq | wc -l)"
 echo "=== SCAN COMPLETE ==="
 ```
@@ -759,7 +759,7 @@ echo "=== SCAN COMPLETE ==="
 grep -r "href=" docs/ | grep -v "^#" | cut -d'"' -f2 | sort | uniq
 
 # 2. Find all frontend documentation links
-grep -r "plexguide.github.io" frontend/static/js/ | grep -o "https://[^\"]*"
+grep -r "github.com/xtamtamx/huntarr-2" frontend/static/js/ | grep -o "https://[^\"]*"
 
 # 3. Check anchor mismatches
 diff <(grep -r "href.*#" frontend/static/js/ | grep -o "#[^\"]*" | sort | uniq) \
