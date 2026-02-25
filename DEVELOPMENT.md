@@ -154,7 +154,7 @@ fetch('./api/endpoint');
 **Fix:** Use proper GitHub documentation pattern with specific anchors
 ```javascript
 // ❌ BROKEN - Old forum or localhost links
-<label><a href="https://huntarr.io/threads/name-field.18/" class="info-icon">
+<label><a href="#" class="info-icon">
 <label><a href="/Huntarr.io/docs/#/configuration" class="info-icon">
 <label><a href="#" class="info-icon">
 
