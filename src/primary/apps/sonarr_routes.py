@@ -171,7 +171,7 @@ def test_connection():
         if response.status_code == 401:
             error_msg = "Authentication failed: Invalid API key"
             sonarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 401
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code == 403:
             error_msg = "Access forbidden: Check API key permissions"
             sonarr_logger.error(error_msg)

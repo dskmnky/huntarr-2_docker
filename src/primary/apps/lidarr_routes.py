@@ -76,7 +76,8 @@ def test_connection():
         if response.status_code == 401:
             error_msg = "Authentication failed: Invalid API key"
             lidarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 401
+            # Return 200 with success=false to avoid triggering frontend 401 redirect
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code == 403:
             error_msg = "Access forbidden: Check API key permissions"
             lidarr_logger.error(error_msg)
