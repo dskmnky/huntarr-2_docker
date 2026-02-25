@@ -685,17 +685,6 @@ def test_connection_endpoint():
     
     result = test_connection(api_url, api_key, api_timeout)
     
-    if result["success"]:
-        return jsonify(result)
-    else:
-        # Return appropriate HTTP status code based on the error
-        if "Invalid API key" in result["message"]:
-            return jsonify(result), 401
-        elif "Access forbidden" in result["message"]:
-            return jsonify(result), 403
-        elif "not found" in result["message"] or "DNS resolution failed" in result["message"]:
-            return jsonify(result), 404
-        elif "timed out" in result["message"]:
-            return jsonify(result), 504
-        else:
-            return jsonify(result), 500 
+    # Always return 200 for connection test results to avoid triggering frontend 401 redirect
+    # The success field indicates whether the connection worked
+    return jsonify(result), 200 

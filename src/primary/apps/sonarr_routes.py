@@ -51,7 +51,7 @@ def sonarr_missing():
         
     except Exception as e:
         logger.error(f"Error in Sonarr missing search: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 200
 
 @sonarr_bp.route('/api/sonarr/upgrade', methods=['POST'])
 def sonarr_upgrade():
@@ -76,7 +76,7 @@ def sonarr_upgrade():
         
     except Exception as e:
         logger.error(f"Error in Sonarr upgrade search: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 200
 
 @sonarr_bp.route('/api/sonarr/reset', methods=['POST'])
 def sonarr_reset():
@@ -94,11 +94,11 @@ def sonarr_reset():
         if success:
             return jsonify({"message": f"Sonarr {reset_type} state reset successfully"})
         else:
-            return jsonify({"error": f"Failed to reset Sonarr {reset_type} state"}), 500
+            return jsonify({"error": f"Failed to reset Sonarr {reset_type} state"}), 200
             
     except Exception as e:
         logger.error(f"Error resetting Sonarr state: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 200
 
 @sonarr_bp.route('/test-connection', methods=['POST'])
 def test_connection():
@@ -138,7 +138,7 @@ def test_connection():
                 formatted_msg = format_suppressed_message(error_msg, suppressed_count)
                 sonarr_logger.error(formatted_msg)
             
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
     except socket.gaierror:
         error_msg = f"DNS resolution failed - Cannot resolve hostname: {hostname}. Please check your URL."
         
@@ -148,7 +148,7 @@ def test_connection():
             formatted_msg = format_suppressed_message(error_msg, suppressed_count)
             sonarr_logger.error(formatted_msg)
         
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except Exception as e:
         # Log the socket testing error but continue with the full request
         sonarr_logger.debug(f"Socket test error, continuing with full request: {str(e)}")
@@ -175,7 +175,7 @@ def test_connection():
         elif response.status_code == 403:
             error_msg = "Access forbidden: Check API key permissions"
             sonarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 403
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code == 404:
             error_msg = "API endpoint not found: This doesn't appear to be a valid Sonarr server. Check your URL."
             
@@ -185,7 +185,7 @@ def test_connection():
                 formatted_msg = format_suppressed_message(error_msg, suppressed_count)
                 sonarr_logger.error(formatted_msg)
             
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code >= 500:
             error_msg = f"Sonarr server error (HTTP {response.status_code}): The Sonarr server is experiencing issues"
             sonarr_logger.error(error_msg)
@@ -213,12 +213,12 @@ def test_connection():
         except ValueError:
             error_msg = "Invalid JSON response from Sonarr API - This doesn't appear to be a valid Sonarr server"
             sonarr_logger.error(f"{error_msg}. Response content: {response.text[:200]}")
-            return jsonify({"success": False, "message": error_msg}), 500
+            return jsonify({"success": False, "message": error_msg}), 200
 
     except requests.exceptions.Timeout as e:
         error_msg = f"Connection timed out after {api_timeout} seconds"
         sonarr_logger.error(f"{error_msg}: {str(e)}")
-        return jsonify({"success": False, "message": error_msg}), 504
+        return jsonify({"success": False, "message": error_msg}), 200
         
     except requests.exceptions.ConnectionError as e:
         # Handle different types of connection errors
@@ -231,11 +231,11 @@ def test_connection():
             error_msg = f"Connection error - Check if Sonarr is running: {error_details}"
             
         sonarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
         
     except requests.exceptions.RequestException as e:
         error_msg = f"Connection test failed: {str(e)}"
         sonarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 500
+        return jsonify({"success": False, "message": error_msg}), 200
 
 

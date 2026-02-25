@@ -47,11 +47,11 @@ def test_connection():
         if result != 0:
             error_msg = f"Connection refused - Unable to connect to {hostname}:{port}. Please check if the server is running and the port is correct."
             radarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
     except socket.gaierror:
         error_msg = f"DNS resolution failed - Cannot resolve hostname: {hostname}. Please check your URL."
         radarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except Exception as e:
         # Log the socket testing error but continue with the full request
         radarr_logger.debug(f"Socket test error, continuing with full request: {str(e)}")
@@ -80,11 +80,11 @@ def test_connection():
         elif response.status_code == 403:
             error_msg = "Access forbidden: Check API key permissions"
             radarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 403
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code == 404:
             error_msg = "API endpoint not found: This doesn't appear to be a valid Radarr server. Check your URL."
             radarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code >= 500:
             error_msg = f"Radarr server error (HTTP {response.status_code}): The Radarr server is experiencing issues"
             radarr_logger.error(error_msg)
@@ -105,7 +105,7 @@ def test_connection():
         except ValueError:
             error_msg = "Invalid JSON response from Radarr API - This doesn't appear to be a valid Radarr server"
             radarr_logger.error(f"{error_msg}. Response content: {response.text[:200]}")
-            return jsonify({"success": False, "message": error_msg}), 500
+            return jsonify({"success": False, "message": error_msg}), 200
             
     except requests.exceptions.ConnectionError as e:
         # Handle different types of connection errors
@@ -118,14 +118,14 @@ def test_connection():
             error_msg = f"Connection error - Check if Radarr is running: {error_details}"
             
         radarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.Timeout:
         error_msg = f"Connection timed out - Radarr took too long to respond"
         radarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 504
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.RequestException as e:
         error_msg = f"Connection test failed: {str(e)}"
         radarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 500
+        return jsonify({"success": False, "message": error_msg}), 200
 
 

@@ -48,7 +48,7 @@ def get_status():
             "configured": False,
             "connected": False,
             "error": str(e)
-        }), 500
+        }), 200
 
 @whisparr_bp.route('/test-connection', methods=['POST'])
 def test_connection():
@@ -84,11 +84,11 @@ def test_connection():
         if result != 0:
             error_msg = f"Connection refused - Unable to connect to {hostname}:{port}. Please check if the server is running and the port is correct."
             whisparr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
     except socket.gaierror:
         error_msg = f"DNS resolution failed - Cannot resolve hostname: {hostname}. Please check your URL."
         whisparr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except Exception as e:
         # Log the socket testing error but continue with the full request
         whisparr_logger.debug(f"Socket test error, continuing with full request: {str(e)}")
@@ -138,11 +138,11 @@ def test_connection():
             elif response.status_code == 403:
                 error_msg = "Access forbidden: Check API key permissions"
                 whisparr_logger.error(error_msg)
-                return jsonify({"success": False, "message": error_msg}), 403
+                return jsonify({"success": False, "message": error_msg}), 200
             elif response.status_code == 404:
                 error_msg = "API endpoint not found: This doesn't appear to be a valid Whisparr server. Check your URL."
                 whisparr_logger.error(error_msg)
-                return jsonify({"success": False, "message": error_msg}), 404
+                return jsonify({"success": False, "message": error_msg}), 200
             elif response.status_code >= 500:
                 error_msg = f"Whisparr server error (HTTP {response.status_code}): The Whisparr server is experiencing issues"
                 whisparr_logger.error(error_msg)
@@ -154,7 +154,7 @@ def test_connection():
         else:
             error_msg = "Could not connect to any Whisparr API endpoint"
             whisparr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
     
     # Successfully connected, now validate version
     try:
@@ -183,7 +183,7 @@ def test_connection():
     except ValueError:
         error_msg = "Invalid JSON response from Whisparr API - This doesn't appear to be a valid Whisparr server"
         whisparr_logger.error(f"{error_msg}. Response content: {response.text[:200]}")
-        return jsonify({"success": False, "message": error_msg}), 500
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.ConnectionError as e:
         # Handle different types of connection errors
         error_details = str(e)
@@ -195,15 +195,15 @@ def test_connection():
             error_msg = f"Connection error - Check if Whisparr is running: {error_details}"
             
         whisparr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.Timeout:
         error_msg = f"Connection timed out - Whisparr took too long to respond"
         whisparr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 504
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.RequestException as e:
         error_msg = f"Connection test failed: {str(e)}"
         whisparr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 500
+        return jsonify({"success": False, "message": error_msg}), 200
 
 # Function to check if Whisparr is configured
 def is_configured():
@@ -226,10 +226,10 @@ def get_versions():
         instance_name = settings.get("name", "Default")
         
         if not api_url or not api_key:
-            return jsonify({"success": False, "message": "No Whisparr instance configured"}), 404
+            return jsonify({"success": False, "message": "No Whisparr instance configured"}), 200
             
         if not enabled:
-            return jsonify({"success": False, "message": "Whisparr instance is disabled"}), 404
+            return jsonify({"success": False, "message": "Whisparr instance is disabled"}), 200
         
         # First try standard API endpoint
         version_url = f"{api_url.rstrip('/')}/api/system/status"
@@ -289,7 +289,7 @@ def get_versions():
         return jsonify({"success": True, "results": [result]})
     except Exception as e:
         whisparr_logger.error(f"Error getting Whisparr versions: {str(e)}")
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": str(e)}), 200
 
 @whisparr_bp.route('/logs', methods=['GET'])
 def get_logs():
@@ -299,7 +299,7 @@ def get_logs():
         log_file = APP_LOG_FILES.get("whisparr")
         
         if not log_file or not os.path.exists(log_file):
-            return jsonify({"success": False, "message": "Log file not found"}), 404
+            return jsonify({"success": False, "message": "Log file not found"}), 200
             
         # Read the log file (last 200 lines)
         with open(log_file, 'r') as f:
@@ -311,7 +311,7 @@ def get_logs():
         error_message = f"Error fetching Whisparr logs: {str(e)}"
         whisparr_logger.error(error_message)
         traceback.print_exc()
-        return jsonify({"success": False, "message": error_message}), 500
+        return jsonify({"success": False, "message": error_message}), 200
 
 @whisparr_bp.route('/clear-processed', methods=['POST'])
 def clear_processed():
@@ -332,5 +332,5 @@ def clear_processed():
     except Exception as e:
         error_message = f"Error clearing Whisparr processed state: {str(e)}"
         whisparr_logger.error(error_message)
-        return jsonify({"success": False, "message": error_message}), 500
+        return jsonify({"success": False, "message": error_message}), 200
 

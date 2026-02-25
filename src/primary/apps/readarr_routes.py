@@ -62,11 +62,11 @@ def test_connection():
             if result != 0:
                 error_msg = f"Connection refused - Unable to connect to {hostname}:{port}. Please check if the server is running and the port is correct."
                 readarr_logger.error(error_msg)
-                return jsonify({"success": False, "message": error_msg}), 404
+                return jsonify({"success": False, "message": error_msg}), 200
         except socket.gaierror:
             error_msg = f"DNS resolution failed - Cannot resolve hostname: {hostname}. Please check your URL."
             readarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
         except Exception as e:
             # Log the socket testing error but continue with the full request
             readarr_logger.debug(f"Socket test error, continuing with full request: {str(e)}")
@@ -82,11 +82,11 @@ def test_connection():
         elif response.status_code == 403:
             error_msg = "Access forbidden: Check API key permissions"
             readarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 403
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code == 404:
             error_msg = "API endpoint not found: This doesn't appear to be a valid Readarr server. Check your URL."
             readarr_logger.error(error_msg)
-            return jsonify({"success": False, "message": error_msg}), 404
+            return jsonify({"success": False, "message": error_msg}), 200
         elif response.status_code >= 500:
             error_msg = f"Readarr server error (HTTP {response.status_code}): The Readarr server is experiencing issues"
             readarr_logger.error(error_msg)
@@ -108,7 +108,7 @@ def test_connection():
         except ValueError:
             error_msg = "Invalid JSON response from Readarr API - This doesn't appear to be a valid Readarr server"
             readarr_logger.error(f"{error_msg}. Response content: {response.text[:200]}")
-            return jsonify({"success": False, "message": error_msg}), 500
+            return jsonify({"success": False, "message": error_msg}), 200
             
     except requests.exceptions.ConnectionError as e:
         # Handle different types of connection errors
@@ -121,14 +121,14 @@ def test_connection():
             error_msg = f"Connection error - Check if Readarr is running: {error_details}"
             
         readarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 404
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.Timeout:
         error_msg = f"Connection timed out - Readarr took too long to respond"
         readarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 504
+        return jsonify({"success": False, "message": error_msg}), 200
     except requests.exceptions.RequestException as e:
         error_msg = f"Connection test failed: {str(e)}"
         readarr_logger.error(error_msg)
-        return jsonify({"success": False, "message": error_msg}), 500
+        return jsonify({"success": False, "message": error_msg}), 200
 
 
