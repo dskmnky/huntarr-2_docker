@@ -555,6 +555,99 @@ window.HuntarrNotifications = {
  * Handles section switching, hash navigation, and sidebar management
  */
 
+// ─── Sidebar Accordion Functions ─────────────────────────────────────
+// These are global functions used by multiple modules for sidebar navigation
+
+/**
+ * Expand a sidebar accordion group by ID
+ * @param {string} groupId - The ID of the nav-group-body element
+ */
+window.expandSidebarGroup = function(groupId) {
+    const groupBody = document.getElementById(groupId);
+    if (!groupBody) return;
+    
+    // Find the header for this group
+    const header = document.querySelector(`[data-group="${groupId}"]`);
+    
+    // Expand the group
+    groupBody.classList.remove('collapsed');
+    if (header) {
+        header.classList.add('expanded');
+    }
+};
+
+/**
+ * Collapse a sidebar accordion group by ID
+ * @param {string} groupId - The ID of the nav-group-body element
+ */
+window.collapseSidebarGroup = function(groupId) {
+    const groupBody = document.getElementById(groupId);
+    if (!groupBody) return;
+    
+    const header = document.querySelector(`[data-group="${groupId}"]`);
+    
+    groupBody.classList.add('collapsed');
+    if (header) {
+        header.classList.remove('expanded');
+    }
+};
+
+/**
+ * Toggle a sidebar accordion group
+ * @param {string} groupId - The ID of the nav-group-body element
+ */
+window.toggleSidebarGroup = function(groupId) {
+    const groupBody = document.getElementById(groupId);
+    if (!groupBody) return;
+    
+    if (groupBody.classList.contains('collapsed')) {
+        window.expandSidebarGroup(groupId);
+    } else {
+        window.collapseSidebarGroup(groupId);
+    }
+};
+
+/**
+ * Set the active nav item based on current hash
+ */
+window.setActiveNavItem = function() {
+    const hash = window.location.hash.replace(/^#/, '') || 'home';
+    
+    // Remove active class from all nav items
+    document.querySelectorAll('#sidebar .nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Find and activate the matching nav item
+    const activeItem = document.querySelector(`#sidebar .nav-item[href*="#${hash}"]`);
+    if (activeItem) {
+        activeItem.classList.add('active');
+    }
+};
+
+// Initialize sidebar accordion click handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers to all nav-group-header elements
+    document.querySelectorAll('.nav-group-header').forEach(header => {
+        header.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const groupId = this.getAttribute('data-group');
+            if (groupId) {
+                window.toggleSidebarGroup(groupId);
+            }
+        });
+    });
+    
+    // Set initial active nav item
+    window.setActiveNavItem();
+    
+    // Update active nav item on hash change
+    window.addEventListener('hashchange', function() {
+        window.setActiveNavItem();
+    });
+});
+
 window.HuntarrNavigation = {
     // Handle navigation clicks
     handleNavigation: function(e) {
