@@ -138,39 +138,35 @@ jobs:
       - name: Build macOS app
         run: python -m PyInstaller huntarr-2-macos.spec --clean --noconfirm
 
-      - name: Create PKG installer
+      - name: Create DMG installer
         run: |
           VERSION="${{ steps.meta.outputs.VERSION }}"
+          brew install create-dmg
           
-          # Create postinstall script
-          mkdir -p scripts
-          cat > scripts/postinstall << 'POSTEOF'
-          #!/bin/bash
-          mkdir -p "$HOME/Library/Application Support/Huntarr-2/config/logs"
-          chmod -R 755 "$HOME/Library/Application Support/Huntarr-2"
-          exit 0
-          POSTEOF
-          chmod +x scripts/postinstall
-          
-          # Build PKG
-          pkgbuild --root dist/ \
-                   --scripts scripts/ \
-                   --identifier io.huntarr2.app \
-                   --version ${VERSION} \
-                   --install-location /Applications \
-                   Huntarr-2-${VERSION}-mac-arm64.pkg
+          # Create DMG with drag-to-Applications layout
+          create-dmg \
+            --volname "Huntarr-2" \
+            --volicon "huntarr.icns" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "Huntarr-2.app" 150 185 \
+            --hide-extension "Huntarr-2.app" \
+            --app-drop-link 450 185 \
+            "Huntarr-2-${VERSION}-mac-arm64.dmg" \
+            "dist/Huntarr-2.app"
       
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: huntarr-2-macos-arm64-installer
-          path: '*.pkg'
+          path: '*.dmg'
           retention-days: 30
       
       - name: Upload to release
         if: steps.meta.outputs.IS_TAG == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          files: '*.pkg'
+          files: '*.dmg'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
