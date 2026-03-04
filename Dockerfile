@@ -42,10 +42,7 @@ ENV HUNTARR_CONFIG_DIR=/config
 EXPOSE 9705
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python3 - << 'EOF' || exit 1
-import requests
-requests.get("http://localhost:9705/api/health", timeout=5)
-EOF
+    CMD curl -fsS http://localhost:9705/api/health || exit 1
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["python", "main.py"]
