@@ -58,9 +58,11 @@ jobs:
 
         if ! diff -q Dockerfile /tmp/upstream_dockerfile >/dev/null 2>&1; then
           echo "changed=true" >> $GITHUB_OUTPUT
+
           diff -u Dockerfile /tmp/upstream_dockerfile > /tmp/dockerfile.diff || true
-          sed ':a;N;$!ba;s/\n/%0A/g' /tmp/dockerfile.diff > /tmp/dockerfile_encoded.diff
-          echo "diff_output=$(cat /tmp/dockerfile_encoded.diff)" >> $GITHUB_OUTPUT
+          base64 /tmp/dockerfile.diff | tr -d '\n' > /tmp/dockerfile.b64
+
+          echo "diff_output=$(cat /tmp/dockerfile.b64)" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
         fi
@@ -68,10 +70,13 @@ jobs:
     - name: Send Pushover alert if Dockerfile changed
       if: steps.dockerfile_check.outputs.changed == 'true'
       run: |
+        echo "${{ steps.dockerfile_check.outputs.diff_output }}" | base64 --decode > /tmp/diff.txt
+        ENCODED_MSG=$(sed ':a;N;$!ba;s/\n/%0A/g' /tmp/diff.txt)
+
         curl -s \
           -F "token=${{ secrets.PUSHOVER_TOKEN }}" \
           -F "user=${{ secrets.PUSHOVER_USER }}" \
-          -F "message=Upstream Dockerfile changed in Huntarr-2.%0AReview differences:%0A${{ steps.dockerfile_check.outputs.diff_output }}" \
+          -F "message=Upstream Dockerfile changed in Huntarr-2.%0AReview differences:%0A${ENCODED_MSG}" \
           https://api.pushover.net/1/messages.json
 
     ###########################################################################
@@ -85,9 +90,11 @@ jobs:
 
         if ! diff -q README.md /tmp/upstream_readme >/dev/null 2>&1; then
           echo "changed=true" >> $GITHUB_OUTPUT
+
           diff -u README.md /tmp/upstream_readme > /tmp/readme.diff || true
-          sed ':a;N;$!ba;s/\n/%0A/g' /tmp/readme.diff > /tmp/readme_encoded.diff
-          echo "diff_output=$(cat /tmp/readme_encoded.diff)" >> $GITHUB_OUTPUT
+          base64 /tmp/readme.diff | tr -d '\n' > /tmp/readme.b64
+
+          echo "diff_output=$(cat /tmp/readme.b64)" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
         fi
@@ -95,10 +102,13 @@ jobs:
     - name: Send Pushover alert if README changed
       if: steps.readme_check.outputs.changed == 'true'
       run: |
+        echo "${{ steps.readme_check.outputs.diff_output }}" | base64 --decode > /tmp/diff.txt
+        ENCODED_MSG=$(sed ':a;N;$!ba;s/\n/%0A/g' /tmp/diff.txt)
+
         curl -s \
           -F "token=${{ secrets.PUSHOVER_TOKEN }}" \
           -F "user=${{ secrets.PUSHOVER_USER }}" \
-          -F "message=Upstream README.md changed in Huntarr-2.%0AReview differences:%0A${{ steps.readme_check.outputs.diff_output }}" \
+          -F "message=Upstream README.md changed in Huntarr-2.%0AReview differences:%0A${ENCODED_MSG}" \
           https://api.pushover.net/1/messages.json
 
     ###########################################################################
