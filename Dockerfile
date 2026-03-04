@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user and group
-RUN groupadd -g 1000 huntarr && \
-    useradd -u 1000 -g huntarr -m -s /bin/bash huntarr
+# Create non-root user and group - Match unraid defaults
+RUN groupadd -g 100 huntarr && \
+    useradd -u 99 -g huntarr -m -s /bin/bash huntarr
 
 # Create app directory
 WORKDIR /app
