@@ -4,6 +4,9 @@ A fork of Huntarr with security patches and customizations. I am not taking any 
 
 Feel free to fork yourself.
 
+Forked from https://github.com/xtamtamx/huntarr-2 to build the docker image missing from their orignal fork. Tweaks have been made to target for Unraid support.
+This fork updates daily from their source. Rebuilds happen daily at 12am UTC if there are changes and forced weekly rebuild on Sunday to pickup any base image updates.
+
 ## What is Huntarr?
 
 Huntarr is a media automation companion that supercharges your *arr stack. It works alongside Radarr, Sonarr, Lidarr, Readarr, and Whisparr to:
@@ -35,7 +38,7 @@ Huntarr is a media automation companion that supercharges your *arr stack. It wo
 version: '3.8'
 services:
   huntarr:
-    image: ghcr.io/xtamtamx/huntarr-2:latest
+    image: ghcr.io/dskmnky/huntarr-2:latest
     container_name: huntarr
     ports:
       - "9705:9705"
