@@ -17,9 +17,11 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Configure merge driver for README
       run: |
         git config merge.ours.driver true
+
     - name: Configure Git identity
       run: |
         git config user.name "github-actions[bot]"
@@ -44,6 +46,64 @@ jobs:
     - name: Push merged changes back to your fork
       if: steps.merge.outputs.upstream_changed == 'true'
       run: git push origin main
+
+    ###########################################################################
+    # Detect upstream Dockerfile changes and send Pushover alert with diff
+    ###########################################################################
+
+    - name: Check if upstream Dockerfile changed
+      id: dockerfile_check
+      run: |
+        git show upstream/main:Dockerfile > /tmp/upstream_dockerfile || echo "no upstream Dockerfile"
+
+        if ! diff -q Dockerfile /tmp/upstream_dockerfile >/dev/null 2>&1; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          diff -u Dockerfile /tmp/upstream_dockerfile > /tmp/dockerfile.diff || true
+          sed ':a;N;$!ba;s/\n/%0A/g' /tmp/dockerfile.diff > /tmp/dockerfile_encoded.diff
+          echo "diff_output=$(cat /tmp/dockerfile_encoded.diff)" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Send Pushover alert if Dockerfile changed
+      if: steps.dockerfile_check.outputs.changed == 'true'
+      run: |
+        curl -s \
+          -F "token=${{ secrets.PUSHOVER_TOKEN }}" \
+          -F "user=${{ secrets.PUSHOVER_USER }}" \
+          -F "message=Upstream Dockerfile changed in Huntarr-2.%0AReview differences:%0A${{ steps.dockerfile_check.outputs.diff_output }}" \
+          https://api.pushover.net/1/messages.json
+
+    ###########################################################################
+    # Detect upstream README.md changes and send Pushover alert with diff
+    ###########################################################################
+
+    - name: Check if upstream README changed
+      id: readme_check
+      run: |
+        git show upstream/main:README.md > /tmp/upstream_readme || echo "no upstream README"
+
+        if ! diff -q README.md /tmp/upstream_readme >/dev/null 2>&1; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          diff -u README.md /tmp/upstream_readme > /tmp/readme.diff || true
+          sed ':a;N;$!ba;s/\n/%0A/g' /tmp/readme.diff > /tmp/readme_encoded.diff
+          echo "diff_output=$(cat /tmp/readme_encoded.diff)" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Send Pushover alert if README changed
+      if: steps.readme_check.outputs.changed == 'true'
+      run: |
+        curl -s \
+          -F "token=${{ secrets.PUSHOVER_TOKEN }}" \
+          -F "user=${{ secrets.PUSHOVER_USER }}" \
+          -F "message=Upstream README.md changed in Huntarr-2.%0AReview differences:%0A${{ steps.readme_check.outputs.diff_output }}" \
+          https://api.pushover.net/1/messages.json
+
+    ###########################################################################
+    # Continue with your existing base-image digest logic
+    ###########################################################################
 
     - name: Check base image digest
       id: base
