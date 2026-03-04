@@ -54,18 +54,31 @@ jobs:
     - name: Check if upstream Dockerfile changed
       id: dockerfile_check
       run: |
+        # Extract upstream Dockerfile
         git show upstream/main:Dockerfile > /tmp/upstream_dockerfile || echo "no upstream Dockerfile"
-
-        if ! diff -q Dockerfile /tmp/upstream_dockerfile >/dev/null 2>&1; then
+    
+        # Compare file contents
+        if diff -q Dockerfile /tmp/upstream_dockerfile >/dev/null 2>&1; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+    
+        # Get commit timestamps
+        UPSTREAM_TS=$(git log -1 --format=%ct upstream/main -- Dockerfile)
+        LOCAL_TS=$(git log -1 --format=%ct HEAD -- Dockerfile)
+    
+        # If upstream is newer, trigger alert
+        if [ "$UPSTREAM_TS" -gt "$LOCAL_TS" ]; then
           echo "changed=true" >> $GITHUB_OUTPUT
-
+    
+          # Generate diff and base64 encode
           diff -u Dockerfile /tmp/upstream_dockerfile > /tmp/dockerfile.diff || true
           base64 /tmp/dockerfile.diff | tr -d '\n' > /tmp/dockerfile.b64
-
           echo "diff_output=$(cat /tmp/dockerfile.b64)" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
         fi
+
 
     - name: Send Pushover alert if Dockerfile changed
       if: steps.dockerfile_check.outputs.changed == 'true'
@@ -88,12 +101,22 @@ jobs:
       run: |
         git show upstream/main:README.md > /tmp/upstream_readme || echo "no upstream README"
 
-        if ! diff -q README.md /tmp/upstream_readme >/dev/null 2>&1; then
+        # First check: are the files different?
+        if diff -q README.md /tmp/upstream_readme >/dev/null 2>&1; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        # Get commit timestamps
+        UPSTREAM_TS=$(git log -1 --format=%ct upstream/main -- README.md)
+        LOCAL_TS=$(git log -1 --format=%ct HEAD -- README.md)
+
+        # Only alert if upstream is newer
+        if [ "$UPSTREAM_TS" -gt "$LOCAL_TS" ]; then
           echo "changed=true" >> $GITHUB_OUTPUT
 
           diff -u README.md /tmp/upstream_readme > /tmp/readme.diff || true
           base64 /tmp/readme.diff | tr -d '\n' > /tmp/readme.b64
-
           echo "diff_output=$(cat /tmp/readme.b64)" >> $GITHUB_OUTPUT
         else
           echo "changed=false" >> $GITHUB_OUTPUT
