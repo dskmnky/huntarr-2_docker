@@ -21,3 +21,4 @@ idna>=3.7          # CVE-2024-3651: encode() quadratic DoS
 Pillow>=10.3.0     # CVE-2024-28219: buffer overflow in _imagingcms.c
 
 pystray==0.19.5; sys_platform == 'win32' # Windows system tray icon
+oauthlib<4         # LOCAL PIN 2026-10-02: transitive via apprise/requests-oauthlib; 4.0.0 (2026-09-28) untested here -> stay on 3.x

@@ -207,8 +207,21 @@ class BackupManager:
                     except Exception as e:
                         logger.warning(f"Could not checkpoint {db_name}: {e}")
                     
-                    # Copy database file
-                    shutil.copy2(db_path, backup_db_path)
+                    # Copy database file via SQLite's online-backup API, NOT shutil.copy2.
+                    # LOCAL PATCH 2026-10-02: a raw open()+close() of the live DB file inside this process drops ALL of
+                    # the process's POSIX (fcntl) locks on it. After that, any other process's SQLite connection that closes
+                    # believes it is the last one, checkpoints, and DELETES the -wal/-shm under us -> WAL mismatch ->
+                    # corruption (huntarr.db, 2026-10-02 02:41Z). The backup API goes through SQLite's VFS, which shares
+                    # lock state per inode, so no locks are dropped and the copy is transactionally consistent.
+                    _src = sqlite3.connect(db_path, timeout=30)
+                    try:
+                        _dst = sqlite3.connect(str(backup_db_path))
+                        try:
+                            _src.backup(_dst)
+                        finally:
+                            _dst.close()
+                    finally:
+                        _src.close()
                     
                     # Verify backup integrity
                     if self._verify_database_integrity(backup_db_path):

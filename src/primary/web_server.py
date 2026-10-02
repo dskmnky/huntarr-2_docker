@@ -763,6 +763,9 @@ def save_general_settings():
     
     # Merge incoming data with current general settings so we never drop keys (e.g. show_trending)
     current = settings_manager.load_settings('general')
+    # LOCAL PATCH 2026-10-02: put stored secrets back where the UI echoed '***REDACTED***'
+    if settings_manager.restore_redacted(data, current):
+        return jsonify({"success": False, "error": "A redacted secret could not be matched to a stored value; re-enter it and save again."}), 400
     merged = {**current, **data}
     # Update checking is always enabled; ensure we persist True even if client omits the key
     merged['check_for_updates'] = True
@@ -902,6 +905,10 @@ def handle_app_settings(app_name):
         
         # Settings cleaned - debug spam removed
         
+        # LOCAL PATCH 2026-10-02: put stored secrets back where the UI echoed '***REDACTED***'
+        if settings_manager.restore_redacted(data, settings_manager.load_settings(app_name)):
+            return jsonify({"success": False, "error": "A redacted secret could not be matched to a stored value; re-enter the API key(s) and save again."}), 400
+
         # Save the app settings
         success = settings_manager.save_settings(app_name, data)
         
