@@ -386,6 +386,38 @@ def redact_secrets(settings: dict) -> dict:
     return redacted
 
 
+REDACTED_PLACEHOLDER = '***REDACTED***'
+
+
+def restore_redacted(new: Any, old: Any) -> int:
+    """LOCAL PATCH 2026-10-02: undo the GET-side redaction on the way back in.
+
+    The settings UI loads redacted settings (api_key = '***REDACTED***') and auto-saves the whole form, which
+    used to write the literal placeholder over the stored secret. Put the stored value back wherever an
+    incoming sensitive field still holds the placeholder. Instances are matched by instance_id only (never
+    by list position: deleting an instance shifts indexes). Returns the number of placeholders left
+    unresolved; the caller must refuse the save if it is > 0.
+    """
+    unresolved = 0
+    if isinstance(new, dict):
+        old_d = old if isinstance(old, dict) else {}
+        for key, value in new.items():
+            if value == REDACTED_PLACEHOLDER and any(sens in key.lower() for sens in SENSITIVE_KEYS):
+                if key in old_d and old_d[key] != REDACTED_PLACEHOLDER and old_d[key]:
+                    new[key] = old_d[key]
+                else:
+                    unresolved += 1
+            elif isinstance(value, (dict, list)):
+                unresolved += restore_redacted(value, old_d.get(key))
+    elif isinstance(new, list):
+        old_l = old if isinstance(old, list) else []
+        by_id = {o.get('instance_id'): o for o in old_l if isinstance(o, dict) and o.get('instance_id')}
+        for item in new:
+            if isinstance(item, dict):
+                unresolved += restore_redacted(item, by_id.get(item.get('instance_id')) if item.get('instance_id') else None)
+    return unresolved
+
+
 def get_all_settings_redacted() -> Dict[str, Dict[str, Any]]:
     """Load settings for all known apps with sensitive data redacted.
     
